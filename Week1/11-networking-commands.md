@@ -1,0 +1,24 @@
+## Networking Commands
+
+- ping
+- netstat
+- ifconfig
+- ip
+- traceroute
+- tracepath
+- mtr
+- nslookup
+- telnet
+- hostname
+- iwconfig
+- ss
+- arp
+- dig
+- nc (netcat)
+- whois
+- route
+- nmap
+- wget
+- watch
+- iptables
+- curl vs wget
