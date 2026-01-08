@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  frontend:
+    build: ./frontend
+    container_name: mern_frontend
+    ports:
+      - "3000:80"
+    networks:
+      - mern-network
+
+  backend:
+    build: ./backend
+    container_name: mern_backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+    networks:
+      - mern-network
+
+  mongo:
+    image: mongo:6
+    container_name: mern_db
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - mern-network
+
+networks:
+  mern-network:
+
+volumes:
+  mongo_data:
