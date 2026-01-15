@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout Source Code') {
+            steps {
+                git url: 'https://github.com/snehatomar1205/DevOps.git', branch: 'main'
+            }
+        }
+
+        stage('Deploy using Docker Compose') {
+            steps {
+                sh '''
+                    cd Week4
+
+                    echo "Stopping existing containers (if any)"
+                    docker compose down || true
+
+                    echo "Building and starting services..."
+                    docker compose up -d --build
+                '''
+            }
+        }
+
+        stage('Verify Deployment') {
+            steps {
+                sh '''
+                    echo "Running containers:"
+                    docker ps
+                '''
+            }
+        }
+    }
+
+    post {
+    success {
+        mail to: 'snehatomar8612@gmail.com',
+             subject: 'Jenkins Build Success',
+             body: 'Pipeline executed successfully.'
+    }
+    failure {
+        mail to: 'snehatomar8612@gmail.com',
+             subject: 'Jenkins Build Failed',
+             body: 'Pipeline failed. Check Jenkins logs.'
+    }
+}
+
+}
