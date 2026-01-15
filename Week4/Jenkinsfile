@@ -34,16 +34,28 @@ pipeline {
     }
 
     post {
-    success {
-        mail to: 'snehatomar8612@gmail.com',
-             subject: 'Jenkins Build Success',
-             body: 'Pipeline executed successfully.'
-    }
-    failure {
-        mail to: 'snehatomar8612@gmail.com',
-             subject: 'Jenkins Build Failed',
-             body: 'Pipeline failed. Check Jenkins logs.'
-    }
+        success {
+            script {
+                try {
+                    mail to: 'snehatomar8612@gmail.com',
+                         subject: 'Jenkins Build Success',
+                         body: 'Pipeline executed successfully.'
+                } catch (err) {
+                    echo "Email notification skipped"
+                }
+            }
+        }
+        failure {
+            script {
+                try {
+                    mail to: 'snehatomar8612@gmail.com',
+                         subject: 'Jenkins Build Failed',
+                         body: 'Pipeline failed. Check Jenkins logs.'
+                } catch (err) {
+                    echo "Email notification skipped"
+                }
+            }
+        }
 }
 
 }
