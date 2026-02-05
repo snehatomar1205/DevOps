@@ -1,0 +1,24 @@
+pipeline {
+  agent any
+  
+  stages {
+    stage('Clean UP') {
+      steps {
+        cleanWs()
+      }
+    }
+    stage('Code Check out') {
+      steps {
+        git branch: 'main',
+          url: 'https://github.com/snehatomar1205/DevOps/Week7.git'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        script {
+          sh 'docker compose up -d --build'
+        }
+      }
+    }
+  }
+}
